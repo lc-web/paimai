@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.dao.housesMapper">
+	<resultMap id="BaseResultMap" type="com.accp.pojo.houses">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="rtid" property="rtid" jdbcType="INTEGER" />
+		<result column="userId" property="userid" jdbcType="INTEGER" />
+		<result column="proportion" property="proportion"
+			jdbcType="INTEGER" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="houseDate" property="housedate" jdbcType="DATE" />
+		<result column="streetid" property="street" jdbcType="INTEGER" />
+		<result column="connect" property="connect" jdbcType="VARCHAR" />
+		<result column="detail" property="detail" jdbcType="VARCHAR" />
+		<result column="img" property="img" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, title, rtid, userId, proportion, price, houseDate,
+		street, connect,
+		detail,img
+	</sql>
+	<select id="queryByuserId" resultType="houses">
+		select * from house where
+		userid=#{userid}
+	</select>
+	<insert id="insert">
+		insert into house
+		values(#{id},#{title},#{rtid},#{userid},#{proportion},#{price},#{housedate},#{county},#{street},#{connect},#{detail})
+	</insert>
+	<delete id="deleteByPrimaryKey">
+		delete from house where id=#{id}
+	</delete>
+	<select id="queryById" resultType="houses">
+		select * from house where id=#{id}
+	</select>
+	<update id="updateByPrimaryKey"
+		parameterType="com.accp.pojo.houses">
+		update house set
+		title=#{title},rtid=#{rtid},proportion=#{proportion},price=#{price},housedate=#{housedate},county=#{county},street=#{street},connect=#{connect},detail=#{detail}
+		where id=#{id};
+	</update>
+
+	<select id="querybyall" resultType="houses">
+		select * from house
+		<where>
+			<if test="title!=null">
+				and title like '%${title}%'
+			</if>
+		</where>
+	</select>
+	<select id="queryByids">
+		select * from house where id=#{id}
+	</select>
+</mapper>
